@@ -42,9 +42,22 @@ async def search():
     response = requests.request("POST", url, headers=headers, data=payload)
     searchresult=response.text
     results = await aget_results(query,region,safesearch,timelimit)
+    data = json.loads(searchresult)
+
+    # Separate into three different arrays
+    search_parameters = data.get('searchParameters', {})
+    knowledge_graph = data.get('knowledgeGraph', {})
+    organic_results = data.get('organic', [])
+    related_searches = data.get('relatedSearches', [])
+
+    # Print separated arrays
+    print("Search Parameters:", search_parameters)
+    print("\nKnowledge Graph:", knowledge_graph)
+    print("\nOrganic Results:", organic_results)
+    print("\nRelated Searches:", related_searches)
     
     
-    return jsonify(searchresult,results)
+    return jsonify(searchresult)
    
 
 
