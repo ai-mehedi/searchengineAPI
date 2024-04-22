@@ -61,7 +61,16 @@ async def search():
    
 
 
-
+@app.route('/api/images/', methods=['POST'])
+async def image():
+    data = request.json
+    query = data.get('query')
+    region = data.get('region')
+    safesearch = data.get('safesearch')
+    timelimit = data.get('timelimit')
+    results = await AsyncDDGS().images(query, region=region,timelimit=timelimit, safesearch=safesearch, max_results=20)
+    print(results)
+    return results
 
 
 
